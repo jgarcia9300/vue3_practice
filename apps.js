@@ -5,10 +5,20 @@ const app = Vue.createApp({
     //Creando una funcion
     data() {
         return {
+            url: 'http://www.thenetninja.co.uk',
             showBooks: true,
-            title: 'the Final Empire 2',
-            author: 'brandon Sanderson',
-            age:45
+            //array de books para usar v4
+            books: [
+                {title: 'name of the wind', author: 'patrick rothfuss', img: 'assets/name-wind.jpg', isFav:true},
+                {title: 'the way of the kings', author: 'brandon sanderson', img: 'assets/way-kings.jfif', isFav:false},
+                {title: 'the final empire', author: 'brandon sanderson', img: 'assets/final-empire.jfif', isFav:true},
+            ]
+
+            // title: 'the Final Empire 2',
+            // author: 'brandon Sanderson',
+            // age:45,
+            // x: 0,
+            // y: 0
         } //se retorna un objeto desde la funcion
     },
     methods: {
@@ -17,14 +27,17 @@ const app = Vue.createApp({
             this.showBooks = !this.showBooks;
         },
 
+        toggleFav(book){
+            book.isFav = !book.isFav;
+        },
+
         handleEvent(e, data){
-            console.log(e, e.type);
+            console.log(e, e.type); //Imprime en consola el evento y el tipo de evento que es.
 
             if (data) {
                 console.log(data);
 
             }
-
         // changeTitle(title){
         //     //this refiere al componente en si mismo
         //     // this.title = 'You changed the title'
@@ -32,6 +45,11 @@ const app = Vue.createApp({
 
         // }
         
+
+    }, handleMouseMove(e) {//Con este evento se toma la posicion de x y y
+        this.x = e.offsetX;
+        this.y = e.offsetY;
+
     }
 
 }

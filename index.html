@@ -1,59 +1,94 @@
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Learning Vue</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <!-- confirmar que se este usando vue3 -->
     <style>
-        .box {
-            padding: 100px 0;
-            width: 400px;
-            text-align: center;
-            background: #ddd;
-            margin: 20px;
-            display: inline-block;
-        }
+      body{
+        background: #eee;
+        max-width: 960px;
+        margin: 20px auto;
+      }
+      p, h3, ul{
+        margin: 0;
+        padding: 0;
+      }
+      li{
+        list-style-type: none;
+        background: #fff;
+        margin: 20px auto;
+        padding: 10px 20px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      img{
+        width: 100px;
+        height: 100px;
+      }
+
+      li.fav{
+        background: #ff9ed2;
+        color: white;
+
+
+      }
     </style>
+  </head>
 
-
-</head>
-
-<body>
+  <body>
     <h1>Hello Vue;</h1>
     <div id="app">
-        <div v-if="showBooks">
-            <p>{{ title }} - {{author}} - {{age}}</p>
-        </div>
-        <button @click="toggleShowBooks">
-            <span v-if="showBooks">Hide Books</span>
-            <span v-else>Show Books</span>
-        </button>
-        <!-- v-show usa css para mostrar elemento usando la propiedad display. v-if accede al DOM -->
-        <div v-show="showBooks">Currently Showing Books</div>
+      <!-- attribute binding: Unir valores dinamicos a los atributos html -->
+      <!-- v-bind buscara el valor url en el componente -->
+      <!-- <a v-bind:href="url">Best Website Ever</a>  -->
+      <!-- atajo para v-bind, escribir : -->
+      <!-- <a :href="url">Best Website Ever</a>  -->
 
+      <div v-if="showBooks">
+        <!-- <p>{{books[0].title}} - {{books[0].author}}</p> Muestra los datos del primer libro -->
+        <ul>
+            <!-- book puede ser llamado de cualquier forma. se va a mostrar cada libro en una lista -->
+            <!-- Se va a usar una clase que dependiendo del valor de fav aplicara el estilo -->
+            <li v-for="book in books" :class="{ fav: book.isFav}" @click="toggleFav(book)">
+                <img :src="book.img" alt="book.title">
+                <h2 style="color: red;">{{book.title}}</h2>
+                <p>{{book.author}}<p>
+            </li>
+        </ul>
+      </div>
+      <!-- Atajo para v-on, es @ -->
+      <button @click="toggleShowBooks">
+        <span v-if="showBooks">Hide Books</span>
 
+        <span v-else>Show Books</span>
+      </button>
+      <!-- v-show usa css para mostrar elemento usando la propiedad display. v-if accede al DOM -->
+      <div v-show="showBooks">Currently Showing Books</div>
 
-        <!-- <p>{{ title }} - {{author}} - {{age}}</p>  -->
-        <!-- nombre de la propiedad que se esta retornando en apps.js -->
-        <!-- v-on reacciona a eventos. En este caso al hacer click se ejecuta codigo javascript en donde age se va a incrementar. -->
-        <!-- <button v-on:click="age++">Increase Age</button> <br> <br> 
+      <!-- <p>{{ title }} - {{author}} - {{age}}</p>  -->
+      <!-- nombre de la propiedad que se esta retornando en apps.js -->
+      <!-- v-on reacciona a eventos. En este caso al hacer click se ejecuta codigo javascript en donde age se va a incrementar. -->
+      <!-- <button v-on:click="age++">Increase Age</button> <br> <br> 
         <button v-on:click="age--">Decrease Age</button> -->
-        <!-- La forma corta para usar v-on:click es @click. Es posible acceder a las funciones creadas en los metodos tambien -->
-        <!-- <div @click="changeTitle('Oathbringer')">change Book Title</div> -->
-        <!-- </div> -->
+      <!-- La forma corta para usar v-on:click es @click. Es posible acceder a las funciones creadas en los metodos tambien -->
+      <!-- <div @click="changeTitle('Oathbringer')">change Book Title</div> -->
+      <!-- </div> -->
 
-        <br>
-        <!-- mouse events -->
-        <div class="box" @mouseover="handleEvent($event, 5)">mouseover (enter)</div>
-        <div class="box" @mouseleave="handleEvent">mouseleave</div>
-        <div class="box" @dblclick="handleEvent">double click</div>
-        <div class="box"></div>
-
+      <br />
+      <!-- mouse events -->
+      <div class="box" @mouseover="handleEvent($event, 5)">
+        mouseover (enter)
+      </div>
+      <div class="box" @mouseleave="handleEvent">mouseleave</div>
+      <div class="box" @dblclick="handleEvent">double click</div>
+      <div class="box" @mousemove="handleMouseMove">position - {{x}} {{y}}</div>
     </div>
 
-        <script src="apps.js"></script>
-</body>
-
+    <script src="apps.js"></script>
+  </body>
 </html>
